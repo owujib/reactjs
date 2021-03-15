@@ -1,42 +1,55 @@
-import React from 'react'
-import FoodForm from './FoodForm'
-import FoodList from './FoodList'
- 
-class App extends React.Component{
+import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
+import axios from 'axios';
 
-  state ={
-    foodItems: [
-      {id: 1, name: 'Grilled fish'},
-      {id: 2, name: 'canned milk'},
-      {id: 3, name: 'frozen bacon'},
-      {id: 4, name: 'fried sabastein'},
-    ]
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import About from './components/About';
+import Contact from './components/Contact.jsx';
+import Home from './components/Home';
+import Navigation from './components/Navigation';
+import PostList from './components/PostList';
+
+class App extends Component {
+  state = {
+    posts: [],
+  };
+
+  componentDidMount() {
+    //fetch data from  https://jsonplaceholder.typicode.com/post
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .then((res) => {
+        this.setState({
+          posts: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }
 
-
-  addFoodItem =(incomingState)=>{
-    let newId = this.state.foodItems.length + 1
-    const {name} = incomingState
-    let newFood = {id: newId, name: name}
-    this.setState({
-      foodItems: [...this.state.foodItems, newFood]
-    })
-    
-    console.log(newFood)
-  }
-
-  render(){
-    return(
+  render() {
+    console.log(this.state);
+    return (
       <div>
-        <FoodList item={this.state.foodItems}/>
+        <Navigation />
 
-        <FoodForm addFoodItem={this.addFoodItem}/>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route
+          path="/posts"
+          render={(routerProps) => (
+            <PostList {...routerProps} posts={this.state.posts} />
+          )}
+        />
+        {/* <Route path="/posts">
+          <PostList posts={this.state.posts} />
+        </Route> */}
+        <Route path="/contact" component={Contact} />
       </div>
-    )
+    );
   }
-};
-
+}
 
 export default App;
-
-
