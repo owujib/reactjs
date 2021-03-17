@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,23 +12,23 @@ import PostList from './components/PostList';
 import PostDetail from './components/PostDetail';
 
 class App extends Component {
-  state = {
-    posts: [],
-  };
+  // state = {
+  //   posts: [],
+  // };
 
-  componentDidMount() {
-    //fetch data from  https://jsonplaceholder.typicode.com/post
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .then((res) => {
-        this.setState({
-          posts: res.data,
-        });
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  }
+  // componentDidMount() {
+  //   //fetch data from  https://jsonplaceholder.typicode.com/post
+  //   axios
+  //     .get('https://jsonplaceholder.typicode.com/posts')
+  //     .then((res) => {
+  //       this.setState({
+  //         posts: res.data,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //     });
+  // }
 
   render() {
     console.log(this.state);
@@ -40,15 +40,14 @@ class App extends Component {
           exact
           path="/"
           render={(routerProps) => {
-            return <Home {...routerProps} posts={this.state.posts} />;
+            return <Home {...routerProps} />;
           }}
         />
         <Route path="/about" component={About} />
+
         <Route
           path="/posts"
-          render={(routerProps) => (
-            <PostList {...routerProps} posts={this.state.posts} />
-          )}
+          render={(routerProps) => <PostList {...routerProps} />}
         />
         <Route path="/contact" component={Contact} />
 
