@@ -9,6 +9,7 @@ import Contact from './components/Contact.jsx';
 import Home from './components/Home';
 import Navigation from './components/Navigation';
 import PostList from './components/PostList';
+import PostDetail from './components/PostDetail';
 
 class App extends Component {
   state = {
@@ -35,7 +36,13 @@ class App extends Component {
       <div>
         <Navigation />
 
-        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/"
+          render={(routerProps) => {
+            return <Home {...routerProps} posts={this.state.posts} />;
+          }}
+        />
         <Route path="/about" component={About} />
         <Route
           path="/posts"
@@ -43,10 +50,14 @@ class App extends Component {
             <PostList {...routerProps} posts={this.state.posts} />
           )}
         />
-        {/* <Route path="/posts">
-          <PostList posts={this.state.posts} />
-        </Route> */}
         <Route path="/contact" component={Contact} />
+
+        <Route
+          path="/post/:id"
+          render={(routerProps) => {
+            return <PostDetail {...routerProps} />;
+          }}
+        />
       </div>
     );
   }

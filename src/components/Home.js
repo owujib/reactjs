@@ -1,8 +1,19 @@
 import React from 'react';
+import CardList from './CardList';
 
-export default function Home() {
+export default function Home(props) {
+  console.log(props);
+
+  const { posts } = props;
+  const PostList = posts.slice(0, 3).map((post) => {
+    return (
+      <div className="col-md-4">
+        <CardList {...post} />
+      </div>
+    );
+  });
   return (
-    <div className="container bg-secondary my-5">
+    <div className="container my-5">
       <h1>Home</h1>
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae non
@@ -17,6 +28,9 @@ export default function Home() {
         Placeat dolores ducimus at alias excepturi similique velit recusandae ea
         aperiam quae. Id, illum praesentium! Quas, dignissimos similique.
       </p>
+      <h3>My Latest post</h3>
+
+      <div className="row">{PostList}</div>
     </div>
   );
 }

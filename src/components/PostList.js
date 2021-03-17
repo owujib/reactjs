@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 
+import { Container, Row, Col } from 'react-bootstrap';
+import CardList from './CardList';
+
 class PostList extends Component {
   render() {
     const { posts } = this.props;
 
     const items = posts.slice(0, 10).map((post) => {
       return (
-        <div key={post.id}>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
-        </div>
+        <Col md={4} className=" mb-2">
+          <CardList {...post} />
+        </Col>
       );
     });
     return (
-      <div>
+      <div className="bg-light">
         <h1>PostList</h1>
-        <div>{items}</div>
+        <Container>
+          <Row className="my-5">{items}</Row>
+        </Container>
       </div>
     );
   }
